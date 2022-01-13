@@ -10,7 +10,7 @@ const listContacts = async () => {
   return contacts;
 };
 
-const getContactById = async (contactId) => {
+const getById = async (contactId) => {
   const contacts = await listContacts();
   const result = contacts.find((item) => item.id === contactId);
   if (!result) {
@@ -38,4 +38,4 @@ const addContact = async (name, email, phone) => {
   return newContact;
 };
 
-module.export = { listContacts, getContactById, removeContact, addContact };
+module.export = { listContacts, getById, removeContact, addContact };
