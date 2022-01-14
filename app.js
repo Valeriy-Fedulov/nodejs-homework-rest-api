@@ -1,21 +1,28 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const fs = require("fs/promises");
+const moment = require("moment");
 
-const contactsOperations = require("./contacts");
-const contacts = require("./db/contacts.json");
 const contactsRouter = require("./routes/api/contacts");
+const contacts = require("./db/contacts.json");
 
 const app = express();
-// app.listen(3000);
+
+app.use(async (req, res, next) => {
+  const { method, url } = req;
+  const date = moment().format("DD-MM-YYYY_hh:mm:ss");
+  await fs.appendFile("server.log", `\n${method} ${url} ${date}`);
+  next();
+});
 
 // const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 // app.use(logger(formatsLogger));
-// app.use(cors());
+app.use(cors());
 // app.use(express.json());
 
-// app.use("/api/contacts", contactsRouter);
+app.use("/api/contacts", contactsRouter);
 
 // app.use((req, res) => {
 //   res.status(404).json({ message: "Not found" });
@@ -26,11 +33,22 @@ const app = express();
 // });
 
 app.get("/api/contacts", (req, res) => {
-  res.json(contacts);
+  // contactsOperations.listContacts();
+  // res.json(contacts);
 });
 
 app.get("/api/contacts/:id", (req, res) => {
-  contactsOperations.getById();
+  // contactsOperations.getById();
 });
+
+app.post("/api/contacts", (req, res) => {
+  // contactsOperations.addContact();
+});
+
+app.delete("/api/contacts/:id", (req, res) => {
+  // contactsOperations.removeContact();
+});
+
+app.put("/api/contacts/:id", (req, res) => {});
 
 module.exports = app;
