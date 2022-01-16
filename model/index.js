@@ -10,7 +10,7 @@ const listContacts = async () => {
   return contacts;
 };
 
-const getById = async (contactId) => {
+const getContactById = async (contactId) => {
   const contacts = await listContacts();
   const result = contacts.find((item) => item.id === contactId);
   if (!result) {
@@ -53,4 +53,10 @@ const updateContact = async (contactId, data) => {
   return contacts[idx];
 };
 
-export { listContacts, getById, removeContact, addContact, updateContact };
+export {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+  updateContact,
+};

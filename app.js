@@ -6,8 +6,6 @@ import moment from "moment";
 
 import contactsRouter from "./routes/api/contactsRouter.js";
 
-// import contactsOperations from "./contacts.js";
-
 const app = express();
 
 app.use(async (req, res, next) => {
@@ -32,24 +30,5 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
-
-app.get("/api/contacts", (req, res) => {
-  // contactsOperations.listContacts();
-  // res.json(contacts);
-});
-
-app.get("/api/contacts/:id", (req, res) => {
-  // contactsOperations.getById();
-});
-
-app.post("/api/contacts", (req, res) => {
-  // contactsOperations.addContact();
-});
-
-app.delete("/api/contacts/:id", (req, res) => {
-  // contactsOperations.removeContact();
-});
-
-app.put("/api/contacts/:id", (req, res) => {});
 
 export default app;

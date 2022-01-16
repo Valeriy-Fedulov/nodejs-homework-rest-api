@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const contactsValidation = (req, res, next) => {
   const schema = Joi.object({
-    name: Joi.string().alphanum().min(3).max(100).required(),
+    name: Joi.string().min(3).max(100).required(),
     email: Joi.string().email({ minDomainSegments: 2 }),
     phone: Joi.number().required(),
   });
