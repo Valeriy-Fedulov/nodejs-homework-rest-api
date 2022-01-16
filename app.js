@@ -52,4 +52,4 @@ app.delete("/api/contacts/:id", (req, res) => {
 
 app.put("/api/contacts/:id", (req, res) => {});
 
-export default { app };
+export default app;
