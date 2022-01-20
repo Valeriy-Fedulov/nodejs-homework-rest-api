@@ -268,3 +268,7 @@ GET /api/contacts/100 20-01-2022_06:02:57
 GET /api/contacts/100 20-01-2022_06:02:57
 GET /api/contacts/10 20-01-2022_06:03:01
 DELETE /api/contacts/100 20-01-2022_06:08:16
+GET / 20-01-2022_07:17:25
+GET /favicon.ico 20-01-2022_07:17:25
+GET / 20-01-2022_07:31:44
+GET /favicon.ico 20-01-2022_07:31:44
