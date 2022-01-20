@@ -1,5 +1,6 @@
 import express from "express";
 import contactsValidation from "../../middlewares/validationMiddleware.js";
+import createError from "http-errors";
 
 import {
   listContacts,
@@ -24,23 +25,22 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:contactId", async (req, res, next) => {
-  const { contactId } = req.params;
-  const result = await getContactById(contactId);
-  if (!result) {
-    res.status(404).json({
-      message: `Contact with id=${contactId} not found`,
-      status: "error",
-      code: 404,
+  try {
+    const { contactId } = req.params;
+    const result = await getContactById(contactId);
+    if (!result)
+      throw new createError(404, `Contact with id=${contactId} not found`);
+    res.status(200).json({
+      message: `Contact id=${contactId} found`,
+      status: "success",
+      code: 200,
+      data: {
+        result,
+      },
     });
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json({
-    message: `Contact id=${contactId} found`,
-    status: "success",
-    code: 200,
-    data: {
-      result,
-    },
-  });
 });
 
 router.post("/", contactsValidation, async (req, res, next) => {
@@ -56,50 +56,44 @@ router.post("/", contactsValidation, async (req, res, next) => {
 });
 
 router.delete("/:contactId", async (req, res, next) => {
-  const { contactId } = req.params;
-  const result = await removeContact(contactId);
-  if (!result) {
-    res.status(404).json({
-      message: `Contact with id=${contactId} not found`,
-      status: "error",
-      code: 404,
-    });
-  }
-  res.status(200).json({
-    message: "Contact deleted",
-    status: "success",
-    code: 200,
-    data: {
-      result,
-    },
-  });
-});
-
-router.put("/:contactId", contactsValidation, async (req, res, next) => {
-  const { contactId } = req.params;
-  if (!req.body) {
-    res.status(400).json({
-      message: "Missing fields",
-      status: "error",
-      code: 400,
-    });
-  } else {
-    const result = await updateContact(contactId, req.body);
-    if (!result) {
-      res.status(404).json({
-        message: `Contact with id=${contactId} not found`,
-        status: "error",
-        code: 404,
-      });
-    }
+  try {
+    const { contactId } = req.params;
+    const result = await removeContact(contactId);
+    if (!result)
+      throw new createError(404, `Contact with id=${contactId} not found`);
     res.status(200).json({
-      message: `Contact id=${contactId} update`,
+      message: "Contact deleted",
       status: "success",
       code: 200,
       data: {
         result,
       },
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:contactId", contactsValidation, async (req, res, next) => {
+  try {
+    const { contactId } = req.params;
+    if (!req.body) {
+      throw new createError(400, "Missing fields");
+    } else {
+      const result = await updateContact(contactId, req.body);
+      if (!result)
+        throw new createError(404, `Contact with id=${contactId} not found`);
+      res.status(200).json({
+        message: `Contact id=${contactId} update`,
+        status: "success",
+        code: 200,
+        data: {
+          result,
+        },
+      });
+    }
+  } catch (error) {
+    next(error);
   }
 });
 

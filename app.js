@@ -3,8 +3,17 @@ import logger from "morgan";
 import cors from "cors";
 import fs from "fs/promises";
 import moment from "moment";
+import mongoose from "mongoose";
 
 import contactsRouter from "./routes/api/contactsRouter.js";
+
+const DB_HOST =
+  "mongodb+srv://userdb:qazXSWS@cluster0.hllxk.mongodb.net/db-contacts?retryWrites=true&w=majority";
+
+mongoose
+  .connect(DB_HOST)
+  .then(() => console.log("Dtabase connect"))
+  .catch((error) => console.log(error.message));
 
 const app = express();
 
@@ -28,6 +37,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  const { status = 500, message = "Server error" } = err;
   res.status(500).json({ message: err.message });
 });
 
