@@ -1,3 +1,5 @@
+import Contact from "../../models/contact.js";
+
 const removeContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
