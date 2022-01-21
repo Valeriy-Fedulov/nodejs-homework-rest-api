@@ -3,20 +3,8 @@ import logger from "morgan";
 import cors from "cors";
 import fs from "fs/promises";
 import moment from "moment";
-import mongoose from "mongoose";
 
 import contactsRouter from "./routes/api/contactsRouter.js";
-
-const DB_HOST =
-  "mongodb+srv://userdb:qazXSW@cluster0.hllxk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-mongoose
-  .connect(DB_HOST)
-  .then(() => console.log("Dtabase connect"))
-  .catch((error) => {
-    console.log(error.message);
-    process.exit(1);
-  });
 
 const app = express();
 
