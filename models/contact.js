@@ -33,7 +33,22 @@ const contactsValidation = (req, res, next) => {
     name: Joi.string().min(3).max(100).required(),
     email: Joi.string().email({ minDomainSegments: 2 }),
     phone: Joi.string().pattern(codePhone).required(),
+    favorite: Joi.bool(),
   });
+
+  const validationResult = joiSchema.validate(req.body);
+  if (validationResult.error) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: `Error ${validationResult.error}`,
+    });
+  }
+  next();
+};
+
+const statusValidation = (req, res, next) => {
+  const joiSchema = Joi.object({ favorite: Joi.bool().required() });
 
   const validationResult = joiSchema.validate(req.body);
   if (validationResult.error) {
@@ -48,4 +63,4 @@ const contactsValidation = (req, res, next) => {
 
 const Contact = model("contact", contactSchema);
 
-export default Contact;
+export { Contact, contactsValidation, statusValidation };

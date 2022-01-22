@@ -1,5 +1,6 @@
 import express from "express";
-import { contactsValidation, ctrlWrapper } from "../../middlewares/index.js";
+import { contactsValidation, statusValidation } from "../../models/contact.js";
+import ctrlWrapper from "../../middlewares/ctrlWrapper.js";
 
 import {
   addContact,
@@ -16,12 +17,12 @@ router.get("/", listContacts);
 
 router.get("/:contactId", getContactById);
 
-router.post("/", addContact);
+router.post("/", contactsValidation, addContact);
 
-router.delete("/:contactId", removeContact);
+router.delete("/:contactId", contactsValidation, removeContact);
 
-router.put("/:contactId", updateContact);
+router.put("/:contactId", contactsValidation, updateContact);
 
-router.patch("/:contactId/favorite", updateStatusContact);
+router.patch("/:contactId/favorite", statusValidation, updateStatusContact);
 
 export default router;

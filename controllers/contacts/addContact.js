@@ -1,4 +1,4 @@
-import Contact from "../../models/contact.js";
+import { Contact } from "../../models/contact.js";
 
 const addContact = async (req, res, next) => {
   try {
@@ -14,15 +14,6 @@ const addContact = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  // const result = await addContact(req.body);
-  // res.status(201).json({
-  //   message: "Contact add",
-  //   status: "success",
-  //   code: 201,
-  //   data: {
-  //     result,
-  //   },
-  // });
 };
 
 export default addContact;
