@@ -1,25 +1,27 @@
 import express from "express";
-import contactsValidation from "../../middlewares/validation.js";
-import createError from "http-errors";
+import { contactsValidation, ctrlWrapper } from "../../middlewares/index.js";
 
-import ctrlWrapper from "../../middlewares/ctrlWrapper.js";
-
-import listContacts from "../../controllers/contacts/listContacts.js";
-import getContactById from "../../controllers/contacts/getContactById.js";
-import removeContact from "../../controllers/contacts/removeContact.js";
-import addContact from "../../controllers/contacts/addContact.js";
-import updateContact from "../../controllers/contacts/updateContact.js";
+import {
+  addContact,
+  getContactById,
+  listContacts,
+  removeContact,
+  updateContact,
+  updateStatusContact,
+} from "../../controllers/contacts/index.js";
 
 const router = express.Router();
 
 router.get("/", listContacts);
 
-router.get("/:contactId", ctrlWrapper(getContactById));
+router.get("/:contactId", getContactById);
 
-router.post("/", contactsValidation, ctrlWrapper(addContact));
+router.post("/", contactsValidation, addContact);
 
-router.delete("/:contactId", ctrlWrapper(removeContact));
+router.delete("/:contactId", removeContact);
 
-router.put("/:contactId", contactsValidation, ctrlWrapper(updateContact));
+router.put("/:contactId", contactsValidation, updateContact);
+
+router.patch("/:contactId/favorite", contactsValidation, updateStatusContact);
 
 export default router;
