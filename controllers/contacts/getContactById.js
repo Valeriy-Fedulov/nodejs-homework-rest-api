@@ -3,7 +3,7 @@ import Contact from "../../models/contact.js";
 const getContactById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const result = await Contact.findOne(contactId);
+    const result = await Contact.findById(contactId);
     if (!result)
       throw new createError(404, `Contact with id=${contactId} not found`);
     res.status(200).json({

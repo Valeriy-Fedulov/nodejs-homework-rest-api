@@ -16,12 +16,12 @@ router.get("/", listContacts);
 
 router.get("/:contactId", getContactById);
 
-router.post("/", contactsValidation, addContact);
+router.post("/", addContact);
 
 router.delete("/:contactId", removeContact);
 
-router.put("/:contactId", contactsValidation, updateContact);
+router.put("/:contactId", updateContact);
 
-router.patch("/:contactId/favorite", contactsValidation, updateStatusContact);
+router.patch("/:contactId/favorite", updateStatusContact);
 
 export default router;
