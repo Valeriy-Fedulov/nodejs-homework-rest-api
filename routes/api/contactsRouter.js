@@ -1,6 +1,5 @@
 import express from "express";
 import { contactsValidation, statusValidation } from "../../models/contact.js";
-import ctrlWrapper from "../../middlewares/ctrlWrapper.js";
 
 import {
   addContact,
