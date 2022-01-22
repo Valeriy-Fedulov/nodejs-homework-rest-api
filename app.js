@@ -3,8 +3,11 @@ import logger from "morgan";
 import cors from "cors";
 import fs from "fs/promises";
 import moment from "moment";
+import dotenv from "dotenv";
 
 import contactsRouter from "./routes/api/contactsRouter.js";
+
+dotenv.config();
 
 const app = express();
 
