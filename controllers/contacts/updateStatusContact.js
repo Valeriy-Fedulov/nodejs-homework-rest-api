@@ -1,4 +1,4 @@
-import { Contact } from "../../models/contact.js";
+import { Contact } from "../../models/index.js";
 import createError from "http-errors";
 
 const updateStatusContact = async (req, res, next) => {

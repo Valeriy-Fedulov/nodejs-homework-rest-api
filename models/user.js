@@ -26,6 +26,10 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -51,6 +55,25 @@ const userValidation = (req, res, next) => {
   next();
 };
 
-const User = model("user", userSchema);
+const loginValidation = (req, res, next) => {
+  const joiSchema = Joi.object({
+    password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required(),
+    email: Joi.string().email({ minDomainSegments: 2 }).required(),
+  });
 
-export { User, userValidation };
+  const validationResult = joiSchema.validate(req.body);
+  if (validationResult.error) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: `Error ${validationResult.error}`,
+    });
+  }
+  next();
+};
+
+const User = model("user", userSchema, loginValidation);
+
+export { User, userValidation, loginValidation };
