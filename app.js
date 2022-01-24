@@ -3,8 +3,11 @@ import logger from "morgan";
 import cors from "cors";
 import fs from "fs/promises";
 import moment from "moment";
+import dotenv from "dotenv";
 
 import contactsRouter from "./routes/api/contactsRouter.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -28,6 +31,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  const { status = 500, message = "Server error" } = err;
   res.status(500).json({ message: err.message });
 });
 
