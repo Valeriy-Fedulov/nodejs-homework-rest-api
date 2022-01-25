@@ -1,16 +1,15 @@
 import pkg from "mongoose";
 import Joi from "joi";
+import bcrypt from "bcryptjs";
 
 const { Schema, model } = pkg;
-
-const codePassword = /^[a-zA-Z0-9]{3,30}$/;
 
 const userSchema = Schema(
   {
     password: {
       type: String,
+      minlength: 6,
       required: [true, "Password is required"],
-      match: codePassword,
     },
     email: {
       type: String,
@@ -34,11 +33,13 @@ const userSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
+userSchema.methods.comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 const userValidation = (req, res, next) => {
   const joiSchema = Joi.object({
-    password: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-      .required(),
+    password: Joi.string().min(6).required(),
     email: Joi.string().email({ minDomainSegments: 2 }).required(),
     subscription: Joi.string().valid("starter", "pro", "business"),
     token: Joi.string().token(),
@@ -57,9 +58,7 @@ const userValidation = (req, res, next) => {
 
 const loginValidation = (req, res, next) => {
   const joiSchema = Joi.object({
-    password: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-      .required(),
+    password: Joi.string().min(6).required(),
     email: Joi.string().email({ minDomainSegments: 2 }).required(),
   });
 

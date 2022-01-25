@@ -7,7 +7,7 @@ import {
   updateStatusContact,
 } from "./contacts/index.js";
 
-import { addUser, loginUser, logoutUser, getUser } from "./user/index.js";
+import { singup, login, logoutUser, getUser } from "./user/index.js";
 
 export {
   addContact,
@@ -16,8 +16,8 @@ export {
   removeContact,
   updateContact,
   updateStatusContact,
-  addUser,
-  loginUser,
+  singup,
+  login,
   logoutUser,
   getUser,
 };
