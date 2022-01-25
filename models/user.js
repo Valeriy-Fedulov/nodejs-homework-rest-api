@@ -74,6 +74,6 @@ const loginValidation = (req, res, next) => {
   next();
 };
 
-const User = model("user", userSchema, loginValidation);
+const User = model("user", userSchema);
 
 export { User, userValidation, loginValidation };

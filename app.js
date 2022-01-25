@@ -5,7 +5,7 @@ import fs from "fs/promises";
 import moment from "moment";
 import dotenv from "dotenv";
 
-import contactsRouter from "./routes/api/contactsRouter.js";
+import { authRouter, contactsRouter } from "./routes/index.js";
 
 dotenv.config();
 
@@ -24,6 +24,7 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/auth", authRouter);
 app.use("/api/contacts", contactsRouter);
 
 app.use((req, res) => {
