@@ -1,13 +1,15 @@
 import express from "express";
-import { userValidation, loginValidation } from "../../models/index.js";
+import { authValidation, loginValidation } from "../../models/index.js";
 
-import { singup, login, logoutUser, getUser } from "../../controllers/index.js";
+import { singup, login, logoutUser } from "../../controllers/index.js";
+
+const { SECRET_KEY } = process.env;
+console.log(SECRET_KEY);
 
 const router = express.Router();
 
-router.post("/singup", userValidation, singup);
-router.post("/login", login);
+router.post("/singup", authValidation, singup);
+router.post("/login", loginValidation, login);
 router.post("/logout", logoutUser);
-router.post("/current", getUser);
 
 export default router;

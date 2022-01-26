@@ -2,6 +2,8 @@ import { User } from "../../models/index.js";
 import Unauthorized from "http-errors";
 import jwt from "jsonwebtoken";
 
+// const { SECRET_KEY } = process.env;
+
 const SECRET_KEY = "process.env";
 
 const login = async (req, res, next) => {

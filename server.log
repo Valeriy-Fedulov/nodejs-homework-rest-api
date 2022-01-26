@@ -413,3 +413,5 @@ POST /api/users/login 25-01-2022_10:34:25
 POST /api/users/login 25-01-2022_10:35:07
 POST /api/users/login 25-01-2022_10:39:04
 POST /api/users/login 25-01-2022_10:46:12
+POST /api/auth/login 26-01-2022_06:35:38
+POST /api/auth/login 26-01-2022_06:39:14

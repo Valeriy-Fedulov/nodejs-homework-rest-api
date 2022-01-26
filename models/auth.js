@@ -37,7 +37,7 @@ userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-const userValidation = (req, res, next) => {
+const authValidation = (req, res, next) => {
   const joiSchema = Joi.object({
     password: Joi.string().min(6).required(),
     email: Joi.string().email({ minDomainSegments: 2 }).required(),
@@ -75,4 +75,4 @@ const loginValidation = (req, res, next) => {
 
 const User = model("user", userSchema);
 
-export { User, userValidation, loginValidation };
+export { User, authValidation, loginValidation };
