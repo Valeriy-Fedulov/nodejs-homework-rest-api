@@ -3,11 +3,10 @@ import logger from "morgan";
 import cors from "cors";
 import fs from "fs/promises";
 import moment from "moment";
-import dotenv from "dotenv";
+
+import "dotenv/config";
 
 import { authRouter, usersRouter, contactsRouter } from "./routes/index.js";
-
-dotenv.config();
 
 const app = express();
 
