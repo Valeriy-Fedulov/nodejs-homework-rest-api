@@ -1,21 +1,15 @@
 import { User } from "../../models/index.js";
 
 const getCurrent = async (req, res, next) => {
-  try {
-    const { userId } = req.params;
-    const result = await User.findById(userId);
-    if (!result) throw new createError(404, `User with id=${userId} not found`);
-    res.status(200).json({
-      message: `User id=${userId} found`,
-      status: "success",
-      code: 200,
-      data: {
-        result,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
+  const result = req.user;
+  res.status(200).json({
+    message: `User current`,
+    status: "success",
+    code: 200,
+    data: {
+      result,
+    },
+  });
 };
 
 export default getCurrent;

@@ -1,5 +1,6 @@
 import express from "express";
 import { contactsValidation, statusValidation } from "../../models/index.js";
+import { ctrlWrapper } from "../../middlewares/index.js";
 
 import {
   addContact,
@@ -12,11 +13,15 @@ import {
 
 const router = express.Router();
 
-router.get("/", listContacts);
-router.get("/:contactId", getContactById);
-router.post("/", contactsValidation, addContact);
-router.delete("/:contactId", contactsValidation, removeContact);
-router.put("/:contactId", contactsValidation, updateContact);
-router.patch("/:contactId/favorite", statusValidation, updateStatusContact);
+router.get("/", ctrlWrapper(listContacts));
+router.get("/:contactId", ctrlWrapper(getContactById));
+router.post("/", contactsValidation, ctrlWrapper(addContact));
+router.delete("/:contactId", contactsValidation, ctrlWrapper(removeContact));
+router.put("/:contactId", contactsValidation, ctrlWrapper(updateContact));
+router.patch(
+  "/:contactId/favorite",
+  statusValidation,
+  ctrlWrapper(updateStatusContact)
+);
 
 export default router;
