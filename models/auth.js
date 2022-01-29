@@ -6,6 +6,10 @@ const { Schema, model } = pkg;
 
 const userSchema = Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       minlength: 6,
@@ -25,10 +29,6 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -39,6 +39,7 @@ userSchema.methods.comparePassword = function (password) {
 
 const authValidation = (req, res, next) => {
   const joiSchema = Joi.object({
+    name: Joi.string().required(),
     password: Joi.string().min(6).required(),
     email: Joi.string().email({ minDomainSegments: 2 }).required(),
     subscription: Joi.string().valid("starter", "pro", "business"),

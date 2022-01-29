@@ -1,6 +1,6 @@
 import express from "express";
 import { contactsValidation, statusValidation } from "../../models/index.js";
-import { ctrlWrapper } from "../../middlewares/index.js";
+import { auth, ctrlWrapper } from "../../middlewares/index.js";
 
 import {
   addContact,
@@ -13,9 +13,9 @@ import {
 
 const router = express.Router();
 
-router.get("/", ctrlWrapper(listContacts));
+router.get("/", auth, ctrlWrapper(listContacts));
 router.get("/:contactId", ctrlWrapper(getContactById));
-router.post("/", contactsValidation, ctrlWrapper(addContact));
+router.post("/", auth, contactsValidation, ctrlWrapper(addContact));
 router.delete("/:contactId", contactsValidation, ctrlWrapper(removeContact));
 router.put("/:contactId", contactsValidation, ctrlWrapper(updateContact));
 router.patch(

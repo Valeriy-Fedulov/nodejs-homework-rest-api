@@ -1,6 +1,5 @@
 import express from "express";
 import { auth, ctrlWrapper } from "../../middlewares/index.js";
-// import { userValidation } from "../../models/index.js";
 
 import { getCurrent } from "../../controllers/index.js";
 
