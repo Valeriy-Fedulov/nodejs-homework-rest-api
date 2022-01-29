@@ -9,7 +9,7 @@ import {
 
 import { singup, login, logout } from "./auth/index.js";
 
-import getCurrent from "./users/index.js";
+import { getCurrent, updateSubscription } from "./users/index.js";
 
 export {
   addContact,
@@ -22,4 +22,5 @@ export {
   login,
   logout,
   getCurrent,
+  updateSubscription,
 };
