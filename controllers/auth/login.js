@@ -15,11 +15,12 @@ const login = async (req, res, next) => {
   await User.findByIdAndUpdate(user._id, { token });
 
   res.status(200).json({
-    message: `Login`,
+    message: `User login`,
     status: "success",
     code: 200,
     data: {
       token,
+      user: { email, subscription: user.subscription },
     },
   });
 };

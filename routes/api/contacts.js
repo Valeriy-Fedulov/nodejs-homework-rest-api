@@ -14,12 +14,18 @@ import {
 const router = express.Router();
 
 router.get("/", auth, ctrlWrapper(listContacts));
-router.get("/:contactId", ctrlWrapper(getContactById));
+router.get("/:contactId", auth, ctrlWrapper(getContactById));
 router.post("/", auth, contactsValidation, ctrlWrapper(addContact));
-router.delete("/:contactId", contactsValidation, ctrlWrapper(removeContact));
-router.put("/:contactId", contactsValidation, ctrlWrapper(updateContact));
+router.delete(
+  "/:contactId",
+  auth,
+  contactsValidation,
+  ctrlWrapper(removeContact)
+);
+router.put("/:contactId", auth, contactsValidation, ctrlWrapper(updateContact));
 router.patch(
   "/:contactId/favorite",
+  auth,
   statusValidation,
   ctrlWrapper(updateStatusContact)
 );
