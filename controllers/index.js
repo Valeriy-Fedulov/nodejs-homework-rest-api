@@ -9,7 +9,9 @@ import {
 
 import { singup, login, logout } from "./auth/index.js";
 
-import { getCurrent, updateSubscription } from "./users/index.js";
+import { getCurrent, updateSubscription, updateAvatar } from "./users/index.js";
+
+import uploadFiles from "./files/index.js";
 
 export {
   addContact,
@@ -23,4 +25,6 @@ export {
   logout,
   getCurrent,
   updateSubscription,
+  updateAvatar,
+  uploadFiles,
 };

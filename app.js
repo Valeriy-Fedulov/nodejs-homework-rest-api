@@ -4,7 +4,12 @@ import cors from "cors";
 
 import "dotenv/config";
 
-import { authRouter, usersRouter, contactsRouter } from "./routes/index.js";
+import {
+  authRouter,
+  usersRouter,
+  contactsRouter,
+  filesRouter,
+} from "./routes/index.js";
 
 const app = express();
 
@@ -17,6 +22,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/contacts", contactsRouter);
+app.use("/api/files", filesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
