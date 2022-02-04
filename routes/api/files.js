@@ -9,7 +9,7 @@ import { auth, ctrlWrapper } from "../../middlewares/index.js";
 
 const router = express.Router();
 
-const FILE_DIR = path.resolve("./tmp");
+const FILE_DIR = path.resolve("./public/avatars");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, FILE_DIR);
@@ -27,6 +27,6 @@ router.post(
   uploadMiddleware.single("avatar"),
   ctrlWrapper(uploadFiles)
 );
-router.use("/download", express.static(FILE_DIR));
+router.use("/", express.static(FILE_DIR));
 
 export default router;
