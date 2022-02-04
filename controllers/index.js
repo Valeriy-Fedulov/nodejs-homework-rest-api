@@ -11,8 +11,6 @@ import { singup, login, logout } from "./auth/index.js";
 
 import { getCurrent, updateSubscription, updateAvatar } from "./users/index.js";
 
-import uploadFiles from "./files/index.js";
-
 export {
   addContact,
   getContactById,
@@ -26,5 +24,4 @@ export {
   getCurrent,
   updateSubscription,
   updateAvatar,
-  uploadFiles,
 };

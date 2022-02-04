@@ -5,7 +5,7 @@ import "dotenv/config";
 describe("Auth middleware test", () => {
   it("Should call next() and add user and token properties to req object", () => {
     const user = {
-      _id: "61f4bf7110557db11ab57882",
+      _id: "1",
     };
 
     const { SECRET_KEY } = process.env;
@@ -22,10 +22,8 @@ describe("Auth middleware test", () => {
     const mockNext = jest.fn();
     auth(mReq, mRes, mockNext);
 
-    console.log(mReq.token);
-
     expect(mReq.token).toEqual(token);
-    // expect(mReq.user._id).toEqual(user._id);
+    expect(mReq.user._id).toEqual(user._id);
     expect(mockNext).toHaveBeenCalled();
   });
 });
