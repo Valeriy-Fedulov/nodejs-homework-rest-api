@@ -29,6 +29,7 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    avatarURL: { type: String },
   },
   { versionKey: false, timestamps: true }
 );
@@ -44,6 +45,7 @@ const authValidation = (req, res, next) => {
     email: Joi.string().email({ minDomainSegments: 2 }).required(),
     subscription: Joi.string().valid("starter", "pro", "business"),
     token: Joi.string().token(),
+    avatarURL: Joi.string(),
   });
 
   const validationResult = joiSchema.validate(req.body);
