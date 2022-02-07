@@ -1,11 +1,12 @@
-import auth from "../middlewares/auth.js";
+import login from "../controllers/index.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-describe("Auth middleware test", () => {
+describe("Auth login test", () => {
   it("Should call next() and add user and token properties to req object", () => {
     const user = {
-      _id: "1",
+      password: "123456",
+      email: "qwerty@gmail.com",
     };
 
     const { SECRET_KEY } = process.env;
@@ -16,14 +17,18 @@ describe("Auth middleware test", () => {
       headers: {
         authorization: `Bearer ${token}`,
       },
+      body: {
+        password: user.password,
+        email: user.email,
+      },
     };
 
     const mRes = {};
     const mockNext = jest.fn();
-    auth(mReq, mRes, mockNext);
+    login(mReq, mRes, mockNext);
 
-    expect(mReq.token).toEqual(token);
-    expect(mReq.user._id).toEqual(user._id);
+    // expect(mReq.token).toEqual(token);
+    expect(mReq.password).toEqual(user.password);
     expect(mockNext).toHaveBeenCalled();
   });
 });
