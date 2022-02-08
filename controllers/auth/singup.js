@@ -2,6 +2,7 @@ import { User } from "../../models/index.js";
 import Conflict from "http-errors";
 import bcrypt from "bcryptjs";
 import gravatar from "gravatar";
+import { v4 as uuidv4 } from "uuid";
 
 const singup = async (req, res, next) => {
   const { name, password, email } = req.body;
@@ -12,11 +13,22 @@ const singup = async (req, res, next) => {
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const avatarURL = gravatar.url(email, { s: 250 });
 
+  const verificationToken = uuidv4();
+  const linkVerify = `/auth/verify/:${verificationToken}`;
+  const msg = {
+    to: email,
+    from: "valerafm.vofm@gmail.com",
+    subject: "Thank you for registration!",
+    text: `Please verify your account by clicking the link: \nhttp://${req.headers.host}${linkVerify} \n\nThank You!\n`,
+  };
+
   const result = await User.create({
     name,
     password: hashPassword,
     email,
     avatarURL,
+    ver,
+    verificationToken,
   });
   res.status(201).json({
     message: "User singup",

@@ -30,6 +30,14 @@ const userSchema = Schema(
       default: null,
     },
     avatarURL: { type: String },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -46,6 +54,8 @@ const authValidation = (req, res, next) => {
     subscription: Joi.string().valid("starter", "pro", "business"),
     token: Joi.string().token(),
     avatarURL: Joi.string(),
+    verify: Joi.boolean(),
+    verificationToken: Joi.string(),
   });
 
   const validationResult = joiSchema.validate(req.body);
