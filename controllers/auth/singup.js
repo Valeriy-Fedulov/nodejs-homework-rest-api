@@ -1,4 +1,4 @@
-import { User } from "../../models/index.js";
+import { User, Verify } from "../../models/index.js";
 import Conflict from "http-errors";
 import bcrypt from "bcryptjs";
 import gravatar from "gravatar";
@@ -16,32 +16,11 @@ const singup = async (req, res, next) => {
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const avatarURL = gravatar.url(email, { s: 250 });
 
-  // const verificationToken = uuidv4();
-  // const linkVerify = `/auth/verify/:${verificationToken}`;
-  // const msg = {
-  //   to: email,
-  //   from: "valerafm.vofm@gmail.com",
-  //   subject: "Thank you for registration!",
-  //   text: `Please verify your account by clicking the link: \nhttp://${req.headers.host}${linkVerify} \n\nThank You!\n`,
-  //   html: `Please verify your account by clicking the link: \nhttp://${req.headers.host}${linkVerify} \n\nThank You!\n`,
-  // };
-
-  // sgMail
-  //   .send(msg)
-  //   .then(() => {
-  //     console.log("Email sent");
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-
   const result = await User.create({
     name,
     password: hashPassword,
     email,
     avatarURL,
-    ver,
-    verificationToken,
   });
   res.status(201).json({
     message: "User singup",
@@ -51,6 +30,40 @@ const singup = async (req, res, next) => {
       user: { email, subscription: result.subscription },
     },
   });
+
+  const verificationToken = uuidv4();
+
+  await Verify.create({
+    userId: user.__id,
+    verificationToken,
+  });
+  res.status(201).json({
+    message: "VerificationToken create",
+    status: "success",
+    code: 201,
+    date: {
+      userId,
+    },
+  });
+
+  const linkVerify = `/auth/verify/:${verificationToken}`;
+
+  const msg = {
+    to: email,
+    from: "valerafm.vofm@ukr.net",
+    subject: "Thank you for registration!",
+    text: `Please verify your account by clicking the link: http://${req.headers.host}${linkVerify} Thank You!`,
+    html: `<h1>Please verify your account by clicking the link: </h1><a href="http://${req.headers.host}${linkVerify}">http://${req.headers.host}${linkVerify}</a> <h2>Thank You!</h2>`,
+  };
+
+  await sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Email sent");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 
 export default singup;

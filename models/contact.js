@@ -1,7 +1,7 @@
-import pkg from "mongoose";
+import mongoose from "mongoose";
 import Joi from "joi";
 
-const { Schema, model } = pkg;
+const { Schema, model } = mongoose;
 
 const codePhone = /^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/;
 

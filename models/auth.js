@@ -1,8 +1,8 @@
-import pkg from "mongoose";
+import mongoose from "mongoose";
 import Joi from "joi";
 import bcrypt from "bcryptjs";
 
-const { Schema, model } = pkg;
+const { Schema, model } = mongoose;
 
 const userSchema = Schema(
   {
@@ -30,13 +30,9 @@ const userSchema = Schema(
       default: null,
     },
     avatarURL: { type: String },
-    verify: {
+    confirmed: {
       type: Boolean,
       default: false,
-    },
-    verificationToken: {
-      type: String,
-      required: [true, "Verify token is required"],
     },
   },
   { versionKey: false, timestamps: true }
@@ -54,8 +50,7 @@ const authValidation = (req, res, next) => {
     subscription: Joi.string().valid("starter", "pro", "business"),
     token: Joi.string().token(),
     avatarURL: Joi.string(),
-    verify: Joi.boolean(),
-    verificationToken: Joi.string(),
+    confirmed: Joi.boolean(),
   });
 
   const validationResult = joiSchema.validate(req.body);
