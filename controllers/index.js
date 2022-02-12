@@ -9,7 +9,12 @@ import {
 
 import { singup, login, logout, verify } from "./auth/index.js";
 
-import { getCurrent, updateSubscription, updateAvatar } from "./users/index.js";
+import {
+  getCurrent,
+  updateSubscription,
+  updateAvatar,
+  sentVerify,
+} from "./users/index.js";
 
 export {
   addContact,
@@ -25,4 +30,5 @@ export {
   updateSubscription,
   updateAvatar,
   verify,
+  sentVerify,
 };

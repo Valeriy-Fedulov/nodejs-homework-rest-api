@@ -16,36 +16,7 @@ const singup = async (req, res, next) => {
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const avatarURL = gravatar.url(email, { s: 250 });
 
-  const result = await User.create({
-    name,
-    password: hashPassword,
-    email,
-    avatarURL,
-  });
-  res.status(201).json({
-    message: "User singup",
-    status: "success",
-    code: 201,
-    data: {
-      user: { email, subscription: result.subscription },
-    },
-  });
-
   const verificationToken = uuidv4();
-
-  await Verify.create({
-    userId: user.__id,
-    verificationToken,
-  });
-  res.status(201).json({
-    message: "VerificationToken create",
-    status: "success",
-    code: 201,
-    date: {
-      userId,
-    },
-  });
-
   const linkVerify = `/auth/verify/:${verificationToken}`;
 
   const msg = {
@@ -53,7 +24,7 @@ const singup = async (req, res, next) => {
     from: "valerafm.vofm@ukr.net",
     subject: "Thank you for registration!",
     text: `Please verify your account by clicking the link: http://${req.headers.host}${linkVerify} Thank You!`,
-    html: `<h1>Please verify your account by clicking the link: </h1><a href="http://${req.headers.host}${linkVerify}">http://${req.headers.host}${linkVerify}</a> <h2>Thank You!</h2>`,
+    html: `Please verify your account by clicking the link: <a href="http://${req.headers.host}${linkVerify}">http://${req.headers.host}${linkVerify}</a> Thank You!`,
   };
 
   await sgMail
@@ -64,6 +35,27 @@ const singup = async (req, res, next) => {
     .catch((error) => {
       console.error(error);
     });
+
+  const result = await User.create({
+    name,
+    password: hashPassword,
+    email,
+    avatarURL,
+  });
+
+  await Verify.create({
+    userId: result._id,
+    verificationToken,
+  });
+
+  res.status(201).json({
+    message: "User singup",
+    status: "success",
+    code: 201,
+    data: {
+      user: { email, subscription: result.subscription },
+    },
+  });
 };
 
 export default singup;

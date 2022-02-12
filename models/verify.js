@@ -21,24 +21,6 @@ const verifySchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const verifyValidation = (req, res, next) => {
-  const joiSchema = Joi.object({
-    userId: Joi.string().required(),
-    verify: Joi.boolean(),
-    verificationToken: Joi.string().required(),
-  });
-
-  const validationResult = joiSchema.validate(req.body);
-  if (validationResult.error) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: `Error ${validationResult.error}`,
-    });
-  }
-  next();
-};
-
 const Verify = model("verify", verifySchema);
 
-export { Verify, verifyValidation };
+export default Verify;
