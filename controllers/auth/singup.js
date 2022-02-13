@@ -24,7 +24,7 @@ const singup = async (req, res, next) => {
     from: "valerafm.vofm@ukr.net",
     subject: "Thank you for registration!",
     text: `Please verify your account by clicking the link: http://${req.headers.host}${linkVerify} Thank You!`,
-    html: `Please verify your account by clicking the link: <a href="http://${req.headers.host}${linkVerify}">http://${req.headers.host}${linkVerify}</a> Thank You!`,
+    html: `Please verify your account by clicking the link: <a href="http://${req.headers.host}${linkVerify}">confirm</a> Thank You!`,
   };
 
   await sgMail
