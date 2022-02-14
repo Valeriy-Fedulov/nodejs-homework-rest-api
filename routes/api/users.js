@@ -8,6 +8,7 @@ import {
   getCurrent,
   updateSubscription,
   updateAvatar,
+  sentVerify,
 } from "../../controllers/index.js";
 
 const router = express.Router();
@@ -33,5 +34,6 @@ router.patch(
   uploadMiddleware.single("avatar"),
   ctrlWrapper(updateAvatar)
 );
+router.post("/verify", ctrlWrapper(sentVerify));
 
 export default router;

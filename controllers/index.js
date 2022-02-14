@@ -7,9 +7,14 @@ import {
   updateStatusContact,
 } from "./contacts/index.js";
 
-import { singup, login, logout } from "./auth/index.js";
+import { singup, login, logout, verify } from "./auth/index.js";
 
-import { getCurrent, updateSubscription, updateAvatar } from "./users/index.js";
+import {
+  getCurrent,
+  updateSubscription,
+  updateAvatar,
+  sentVerify,
+} from "./users/index.js";
 
 export {
   addContact,
@@ -24,4 +29,6 @@ export {
   getCurrent,
   updateSubscription,
   updateAvatar,
+  verify,
+  sentVerify,
 };

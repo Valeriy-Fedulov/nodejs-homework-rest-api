@@ -6,7 +6,7 @@ const { SECRET_KEY } = process.env;
 
 const login = async (req, res, next) => {
   const { password, email } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, confirmed: true });
   if (!user || !user.comparePassword(password))
     throw new Unauthorized("Email or password is wrong");
 

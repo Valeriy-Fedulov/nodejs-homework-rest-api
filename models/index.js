@@ -2,6 +2,8 @@ import { Contact, contactsValidation, statusValidation } from "./contact.js";
 
 import { User, authValidation, loginValidation } from "./auth.js";
 
+import Verify from "./verify.js";
+
 export {
   Contact,
   contactsValidation,
@@ -9,4 +11,5 @@ export {
   User,
   authValidation,
   loginValidation,
+  Verify,
 };
